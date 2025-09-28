@@ -2,163 +2,224 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="format-detection" content="telephone=no,email=no,address=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>单页 H5 广告案例</title>
+  <title>H5 广告 · 成品页面</title>
   <style>
     :root{
-      --bg1:#0f1220; --bg2:#171a2d; --brand:#4fd1c5; --brand2:#5b8cff;
-      --text:#e8edf7; --muted:#a9b3c7; --card:#1b1f36cc; --radius:16px;
-      --glow: 0 8px 40px rgba(79,209,197,.35);
+      --brand:#4fd1c5;
+      --brand2:#5b8cff;
+      --text:#f2f5fb;
+      --muted:#b7c2d9;
+      --shadow: 0 12px 48px rgba(0,0,0,.35);
+      --radius: 18px;
     }
-    *{box-sizing:border-box} html,body{height:100%} html{font-size:16px}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
-      margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
-      color:var(--text);
-      background: radial-gradient(1000px 600px at 70% -10%, #243056 0%, rgba(36,48,86,0) 60%), linear-gradient(160deg,var(--bg1),var(--bg2) 60%);
-      -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color:transparent; overflow-x:hidden;
+      margin:0; overflow:hidden; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+      color:var(--text); background:#0b0e19;
+      -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color:transparent;
     }
-    .page{min-height:100svh; padding:calc(20px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom));
-      display:flex; flex-direction:column; align-items:center; justify-content:space-between; position:relative; isolation:isolate;}
-    .particle{position:absolute; width:10px;height:10px; border-radius:50%; background: radial-gradient(circle,#fff,rgba(255,255,255,0) 70%);
-      opacity:.22; filter:blur(1px); animation:floatUp linear infinite;}
-    .p1{left:8%; top:70%; animation-duration:12s;} .p2{left:18%; top:30%; animation-duration:16s;}
-    .p3{left:78%; top:60%; animation-duration:14s;} .p4{left:65%; top:20%; animation-duration:18s;}
-    .p5{left:50%; top:80%; animation-duration:13s;}
-    @keyframes floatUp{0%{transform:translateY(0) scale(1)} 100%{transform:translateY(-120vh) scale(.6); opacity:.05}}
-    .brand{width:100%; display:flex; align-items:center; gap:12px; opacity:0; transform:translateY(-12px); animation:fadeInDown .8s .15s both;}
-    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7cf7e9,#7aa8ff);box-shadow:0 4px 20px rgba(123,200,255,.35);position:relative;overflow:hidden;}
-    .logo::after{content:"";position:absolute;inset:-40% auto -40% -40%; width:40%; transform:rotate(25deg);
-      background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent); animation:shine 2.6s ease-in-out infinite;}
-    .brand-name{font-weight:700; letter-spacing:.3px;}
-    @keyframes shine{0%{left:-40%} 100%{left:140%}}
-    .hero{text-align:center; padding:8vh 0 4vh; width:100%;}
-    .pretitle{font-size:.85rem;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;opacity:0;transform:translateY(6px);animation:fadeInUp .7s .2s both;}
-    .title{margin:10px 0 12px; font-size:clamp(1.8rem,6vw,2.4rem); line-height:1.15; font-weight:800;
-      background:linear-gradient(90deg,#dfe8ff,#a4fbef 50%,#dfe8ff); -webkit-background-clip:text; background-clip:text; color:transparent;
-      letter-spacing:.4px; opacity:0; transform:translateY(8px) scale(.98); animation:popIn .7s .32s both;}
-    .subtitle{margin:0 auto; max-width:680px; color:var(--muted); font-size:1rem; line-height:1.6; opacity:0; transform:translateY(10px); animation:fadeInUp .7s .38s both;}
-    .cta{margin-top:24px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap; opacity:0; transform:translateY(12px); animation:fadeInUp .7s .45s both;}
-    .btn{appearance:none; border:0; cursor:pointer; padding:14px 18px; border-radius:12px; font-weight:700; letter-spacing:.2px;
-      background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#0b1020; box-shadow:var(--glow); transition:transform .12s ease, filter .12s ease;}
-    .btn:active{transform:scale(.98)}
-    .btn.secondary{background:#242a45; color:#d2d8eb; box-shadow:none; border:1px solid #3a4269;}
-    .features{width:100%; max-width:860px; margin:20px auto 0; display:grid; grid-template-columns:1fr; gap:14px;}
-    .card{background:var(--card); border:1px solid #2a2f4d; box-shadow:0 8px 24px rgba(10,14,28,.22); border-radius:var(--radius);
-      padding:16px 14px; display:flex; gap:12px; opacity:0; transform:translateY(10px); animation:fadeInUp .7s .52s both;}
-    .ico{flex:0 0 34px; height:34px; border-radius:10px; background:linear-gradient(135deg,#9cf8ee,#8aa3ff); box-shadow:0 6px 16px rgba(140,170,255,.35);}
-    .card h3{margin:0 0 6px; font-size:1rem; letter-spacing:.2px;} .card p{margin:0; color:var(--muted); font-size:.95rem; line-height:1.55;}
-    .footer{width:100%; text-align:center; color:#8f9bb8; font-size:.85rem; margin-top:12px; opacity:0; transform:translateY(6px); animation:fadeInUp .7s .6s both;}
-    .hint{margin-top:6px; font-size:.8rem; opacity:.8;}
-    @keyframes fadeInDown{from{opacity:0; transform:translateY(-10px)} to{opacity:1; transform:none}}
-    @keyframes fadeInUp{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
-    @keyframes popIn{0%{opacity:0; transform:translateY(10px) scale(.96)} 60%{opacity:1; transform:translateY(0) scale(1.02)} 100%{transform:scale(1)}}
-    .tap-spark{position:absolute; pointer-events:none; width:20px;height:20px; border-radius:50%;
-      background:radial-gradient(circle,rgba(255,255,255,.85),rgba(255,255,255,0) 70%); mix-blend-mode:screen; opacity:0; transform:scale(.5);
-      transition:opacity .3s ease, transform .3s ease;}
-    .tap-spark.active{opacity:1; transform:scale(1.3)}
-    @media (width >= 480px){ .features{grid-template-columns:repeat(3,1fr)} .card{padding:18px} }
+    /* 背景视频全屏 */
+    .bg{
+      position:fixed; inset:0; overflow:hidden; z-index:0;
+    }
+    .bg video{
+      position:absolute; min-width:100%; min-height:100%;
+      width:auto; height:auto; top:50%; left:50%; transform:translate(-50%,-50%);
+      filter: saturate(1.05) brightness(.92);
+    }
+    /* 渐变遮罩提升对比度 */
+    .overlay{
+      position:fixed; inset:0; z-index:1;
+      background: radial-gradient(1200px 600px at 70% -10%, rgba(40,60,120,.55), rgba(20,24,40,.25) 60%),
+                  linear-gradient(160deg, rgba(8,12,24,.55), rgba(12,16,28,.75));
+      pointer-events:none;
+    }
+    /* 内容容器 */
+    .page{
+      position:relative; z-index:2; min-height:100svh; padding:calc(22px + env(safe-area-inset-top)) 18px calc(26px + env(safe-area-inset-bottom));
+      display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+    }
+    header{
+      width:100%; display:flex; align-items:center; gap:12px;
+      animation: fadeInDown .8s .1s both;
+    }
+    .logo{
+      width:36px;height:36px;border-radius:10px; background:linear-gradient(135deg,#7cf7e9,#7aa8ff);
+      box-shadow:0 6px 20px rgba(110,160,255,.35); position:relative; overflow:hidden;
+    }
+    .logo::after{ content:""; position:absolute; inset:-40% auto -40% -40%; width:40%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent); transform:rotate(25deg);
+      animation: shine 2.6s ease-in-out infinite; }
+    .brand{ font-weight:800; letter-spacing:.3px; text-shadow: 0 2px 10px rgba(0,0,0,.4); }
+
+    main{ text-align:center; width:100%; padding: 12vh 0 4vh; }
+    .pretitle{
+      font-size:.85rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted);
+      opacity:0; transform:translateY(6px); animation: fadeInUp .6s .15s both;
+    }
+    h1{
+      margin:10px 0 12px; font-size: clamp(1.9rem, 6vw, 2.6rem); line-height:1.15; font-weight:900;
+      background:linear-gradient(90deg,#f2f7ff,#a5f7ef 50%,#e1eaff); -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow: 0 8px 28px rgba(0,0,0,.45);
+      opacity:0; transform:translateY(8px) scale(.98); animation: popIn .7s .28s both;
+    }
+    .subtitle{
+      margin:0 auto; max-width:720px; color:var(--muted); font-size:1rem; line-height:1.65;
+      opacity:0; transform:translateY(10px); animation: fadeInUp .6s .35s both;
+      text-shadow: 0 4px 16px rgba(0,0,0,.35);
+    }
+
+    .cta{
+      margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+      opacity:0; transform:translateY(12px); animation: fadeInUp .6s .42s both;
+    }
+    .btn{
+      appearance:none; border:0; cursor:pointer; padding:14px 18px; border-radius:14px;
+      font-weight:800; letter-spacing:.2px; color:#0b1020; box-shadow: var(--shadow);
+      background: linear-gradient(135deg,var(--brand),var(--brand2));
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .btn:active{ transform: scale(.98) }
+    .btn.secondary{ background: rgba(255,255,255,.08); color:#e7edff; border:1px solid rgba(255,255,255,.16); }
+
+    .badges{
+      display:grid; grid-template-columns:1fr; gap:12px; width:min(900px,100%); margin: 22px auto 0;
+      opacity:0; transform:translateY(12px); animation: fadeInUp .6s .48s both;
+    }
+    .card{
+      display:flex; gap:12px; align-items:flex-start; padding:14px 16px;
+      background: rgba(10,14,28,.55); border:1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius); backdrop-filter: blur(4px); box-shadow: var(--shadow);
+    }
+    .ico{ flex:0 0 36px; height:36px; border-radius:10px; background:linear-gradient(135deg,#9cf8ee,#8aa3ff); }
+    .card h3{ margin:0 0 6px; font-size:1rem; }
+    .card p{ margin:0; color:var(--muted); font-size:.95rem; line-height:1.6; }
+
+    footer{
+      width:100%; text-align:center; color:#c6d0e6; opacity:.8; font-size:.85rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,.4);
+      opacity:0; transform:translateY(10px); animation: fadeInUp .6s .55s both;
+    }
+
+    /* 粒子点缀 */
+    .spark{ position:absolute; width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle, #fff, rgba(255,255,255,0) 70%);
+      opacity:.22; filter:blur(1px); animation: floatUp linear infinite; }
+    .s1{ left:8%; top:70%; animation-duration:12s;} .s2{ left:18%; top:30%; animation-duration:16s;}
+    .s3{ left:78%; top:60%; animation-duration:14s;} .s4{ left:65%; top:20%; animation-duration:18s;}
+    .s5{ left:50%; top:80%; animation-duration:13s;}
+    @keyframes floatUp{ 0%{ transform:translateY(0) scale(1)} 100%{ transform:translateY(-120vh) scale(.6); opacity:.05 }}
+
+    /* 动画 */
+    @keyframes fadeInDown{ from{opacity:0; transform:translateY(-10px)} to{opacity:1; transform:none}}
+    @keyframes fadeInUp{ from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+    @keyframes popIn{
+      0%{opacity:0; transform:translateY(10px) scale(.96)}
+      60%{opacity:1; transform:translateY(0) scale(1.02)}
+      100%{transform:scale(1)}
+    }
+    @keyframes shine{ 0%{left:-40%} 100%{left:140%} }
+
+    @media (width >= 520px){
+      .badges{ grid-template-columns: repeat(3,1fr); }
+    }
   </style>
 </head>
 <body>
-  <div class="page" id="page">
-    <i class="particle p1"></i><i class="particle p2"></i><i class="particle p3"></i><i class="particle p4"></i><i class="particle p5"></i>
+  <!-- 全屏背景视频（自动播放/静音/循环，兼容微信内置浏览器） -->
+  <div class="bg" aria-hidden="true">
+    <video src="./ad.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto"></video>
+  </div>
+  <div class="overlay"></div>
 
-    <header class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <div class="brand-name">你的品牌 / 活动</div>
+  <div class="page">
+    <i class="spark s1"></i><i class="spark s2"></i><i class="spark s3"></i><i class="spark s4"></i><i class="spark s5"></i>
+
+    <header>
+      <div class="logo"></div>
+      <div class="brand">你的品牌 / 活动</div>
     </header>
 
-    <main class="hero" role="main">
-      <div class="pretitle">H5 动画</div>
-      <h1 class="title">轻量·干净·即开即看</h1>
-      <p class="subtitle">纯原生 HTML/CSS/JS，无广告与外链库。适合邀请函、发布会、招聘宣讲、年会通知等一屏展示场景。替换文案即可上线。</p>
+    <main role="main">
+      <div class="pretitle">H5 广告 · 视频首屏</div>
+      <h1>一键扫码 · 即刻进入</h1>
+      <p class="subtitle">本页面以你提供的视频作为背景，叠加标题、卖点与行动按钮。你可以直接替换文案与链接，然后上传到 GitHub Pages，即可在微信中打开。</p>
 
       <div class="cta">
-        <button class="btn" id="btnPrimary">立即报名</button>
-        <button class="btn secondary" id="btnMore">了解更多</button>
+        <button class="btn" id="btnGo">立即报名</button>
+        <button class="btn secondary" id="btnInfo">了解更多</button>
       </div>
 
-      <section class="features" aria-label="亮点">
+      <section class="badges" aria-label="卖点">
         <article class="card">
           <div class="ico" aria-hidden="true"></div>
           <div>
-            <h3>开箱即用</h3>
-            <p>保存为 index.html，上传到任意静态托管（GitHub Pages / Vercel / 自有服务器），生成链接即可。</p>
+            <h3>沉浸感视频</h3>
+            <p>全屏自动播放（静音）背景视频，提升首屏吸引力。兼容微信内置浏览器。</p>
           </div>
         </article>
         <article class="card">
           <div class="ico" aria-hidden="true"></div>
           <div>
-            <h3>动画顺滑</h3>
-            <p>首屏入场动效 + 粒子背景，CSS 动画流畅，适配 iOS/Android 主流机型。</p>
+            <h3>轻量动画</h3>
+            <p>CSS 动画与渐变遮罩，增强对比度与清晰度，同时保持加载轻量流畅。</p>
           </div>
         </article>
         <article class="card">
           <div class="ico" aria-hidden="true"></div>
           <div>
-            <h3>无强制广告</h3>
-            <p>不依赖第三方平台渲染，页面不嵌广告位。素材请使用自有或可商用资源。</p>
+            <h3>即传即用</h3>
+            <p>本地只需 <code>index.html</code> + <code>ad.mp4</code> 两个文件，上传到仓库根目录即可上线。</p>
           </div>
         </article>
       </section>
     </main>
 
-    <footer class="footer">
-      © 2025 你的公司名称
-      <div class="hint">提示：轻触页面可触发光效；点“了解更多”查看弹窗。</div>
-    </footer>
-
-    <div class="tap-spark" id="spark"></div>
+    <footer>© 2025 你的公司名称 · 所有素材请确认拥有使用权</footer>
   </div>
 
+  <!-- 简单弹窗模板 -->
   <template id="tpl-dialog">
-    <div class="dialog-mask" style="position:fixed; inset:0; background:rgba(9,12,24,.6); display:flex; align-items:center; justify-content:center; z-index:1000; backdrop-filter: blur(2px);">
-      <div class="dialog" role="dialog" aria-modal="true" style="width:min(92vw,520px); background:#1b1f36; color:#e8edf7; border:1px solid #2a2f4d; border-radius:16px; padding:18px; box-shadow:0 14px 40px rgba(0,0,0,.4);">
-        <div style="font-weight:800; font-size:1.1rem; margin-bottom:8px;">活动说明</div>
-        <div style="color:#a9b3c7; line-height:1.6; font-size:.95rem;">
+    <div class="mask" style="position:fixed; inset:0; background:rgba(5,8,16,.58); display:flex; align-items:center; justify-content:center; z-index:99; backdrop-filter: blur(2px);">
+      <div class="dlg" role="dialog" aria-modal="true" style="width:min(92vw,520px); background:#121528; color:#e8edf7; border:1px solid #283054;
+          border-radius:16px; padding:18px; box-shadow:0 14px 40px rgba(0,0,0,.45);">
+        <div style="font-weight:900; font-size:1.1rem; margin-bottom:8px;">活动说明</div>
+        <div style="color:#a9b3c7; line-height:1.65; font-size:.95rem;">
           在这里填写活动介绍、时间地点、报名方式等。也可放二维码图片（本地图片或 Base64）。
         </div>
         <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:14px;">
-          <button id="dlgClose" style="appearance:none; border:1px solid #3a4269; background:#242a45; color:#d2d8eb; padding:10px 14px; border-radius:12px; font-weight:700; letter-spacing:.2px;">我知道了</button>
+          <button id="dlgClose" style="appearance:none; border:1px solid #3a4269; background:#242a45; color:#d2d8eb; padding:10px 14px; border-radius:12px; font-weight:800; letter-spacing:.2px;">我知道了</button>
         </div>
       </div>
     </div>
   </template>
 
   <script>
+    // 交互逻辑（无需第三方库）
     (function(){
-      const btnPrimary = document.getElementById('btnPrimary');
-      const btnMore = document.getElementById('btnMore');
-      const page = document.getElementById('page');
-      const spark = document.getElementById('spark');
+      const btnGo = document.getElementById('btnGo');
+      const btnInfo = document.getElementById('btnInfo');
 
-      // 防双击放大
-      let lastTouch = 0;
-      document.addEventListener('touchend',(e)=>{const now=Date.now(); if(now-lastTouch<=350) e.preventDefault(); lastTouch=now;},{passive:false});
+      // TODO: 将下面报名链接替换为你的实际表单地址
+      const SIGNUP_URL = "https://example.com/form"; // 替换这里
 
-      // 轻触闪光
-      function tapSpark(x,y){
-        spark.style.left=(x-10)+'px'; spark.style.top=(y-10)+'px';
-        spark.classList.add('active'); clearTimeout(spark._t);
-        spark._t=setTimeout(()=>spark.classList.remove('active'),260);
-      }
-      page.addEventListener('touchstart',(e)=>{const t=e.touches[0]; tapSpark(t.clientX,t.clientY);},{passive:true});
-      page.addEventListener('click',(e)=>tapSpark(e.clientX,e.clientY));
-
-      // 立即报名：替换为你的表单链接
-      btnPrimary.addEventListener('click', ()=>{
-        // TODO: 改成你的报名 URL，例如：location.href='https://你的表单链接';
-        alert('这里跳转到你的报名表单链接（请在代码里替换为实际 URL）。');
+      btnGo.addEventListener('click', ()=>{
+        if (SIGNUP_URL && SIGNUP_URL.startsWith('http')) {
+          location.href = SIGNUP_URL;
+        } else {
+          alert("请在代码中把 SIGNUP_URL 替换成你的报名链接。");
+        }
       });
 
-      // 了解更多：弹窗
-      btnMore.addEventListener('click', ()=>{
-        const node=document.getElementById('tpl-dialog').content.cloneNode(true);
+      btnInfo.addEventListener('click', ()=>{
+        const node = document.getElementById('tpl-dialog').content.cloneNode(true);
         document.body.appendChild(node);
-        document.getElementById('dlgClose').addEventListener('click', ()=> document.querySelector('.dialog-mask').remove());
+        document.getElementById('dlgClose').addEventListener('click', ()=> document.querySelector('.mask').remove());
       });
     })();
   </script>
