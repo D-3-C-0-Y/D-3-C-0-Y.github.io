@@ -8,10 +8,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
   :root{
+    /* 主题与网格背景 */
     --bg1:#07122a; --bg2:#0a1b3d; --grid:#1e3b7a66;
     --panel:#0f234fcc; --line:#8fb3ff; --text:#e9f0ff; --muted:#bcd0ff;
     --accent:#7cc7ff; --accent2:#5fe0d6; --radius:14px;
-    --w: min(420px, 92vw);
+    --w: min(420px, 92vw); /* 内容宽度（用于对齐腰线/时间） */
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -22,16 +23,20 @@
     background: radial-gradient(1200px 600px at 50% -10%, #15306a88 0%, #0000 60%), linear-gradient(160deg,var(--bg1),var(--bg2) 60%);
     -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color:transparent; overflow:hidden;
   }
+
+  /* ====== 字体（如需精准还原，请把url换为你的web字体文件路径） ====== */
   @font-face{
-    font-family:"YuanYingHei";
-    src: local("源影黑体"), local("YuanYingHei");
+    font-family:"YuanYingHei"; /* 源影黑体 */
+    src: local("源影黑体"), local("YuanYingHei"); /* , url(./fonts/yuanyinghei.woff2) format("woff2") */
     font-display:swap;
   }
   @font-face{
-    font-family:"JiYingHuiSong";
-    src: local("极影毁片辉宋"), local("JiYingHuiSong");
+    font-family:"JiYingHuiSong"; /* 极影毁片辉宋 */
+    src: local("极影毁片辉宋"), local("JiYingHuiSong"); /* , url(./fonts/jiyinghuisong.woff2) format("woff2") */
     font-display:swap;
   }
+
+  /* ====== 背景网格&星点 ====== */
   .bg{position:fixed; inset:0; z-index:0; pointer-events:none;}
   .bg::before{
     content:""; position:absolute; inset:0;
@@ -43,63 +48,288 @@
       radial-gradient(2px 2px at 80% 40%,#8fd0ff88,#0000 60%);
     opacity:.35;
   }
+
+  /* ====== 翻页容器 ====== */
   .wrap{position:relative; z-index:1; height:100svh; overflow-y:auto; scroll-snap-type:y mandatory;}
   .screen{min-height:100svh; scroll-snap-align:start;
           padding: calc(18px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
           display:flex; flex-direction:column; align-items:center; gap:16px;}
+
+  /* 通用卡片/边框盒 */
   .panel{width:var(--w); padding:16px 14px;
          border:1.5px solid #3b63c7; border-radius:var(--radius);
          background: linear-gradient(180deg, rgba(20,40,90,.55), rgba(12,24,52,.55));
          backdrop-filter: blur(3px); box-shadow: 0 10px 40px rgba(0,0,0,.35);}
   .kv{width:var(--w); border:1.5px solid var(--line); border-radius:12px; padding:14px 12px;}
-  .title-2025{font-family:"YuanYingHei","PingFang SC","Microsoft YaHei",sans-serif;
-    font-size:46px; font-weight:800; line-height:1.05; text-align:center;}
-  .title-zh-32b{font-family:"JiYingHuiSong","PingFang SC","Microsoft YaHei",serif;
-    font-size:32px; font-weight:800; line-height:1.25; text-align:center;}
-  .title-en-26{font-family:"JiYingHuiSong","PingFang SC","Microsoft YaHei",serif;
-    font-size:26px; font-weight:400; line-height:1.25; text-align:center; color:var(--muted);}
+
+  /* ====== 排版系统（按你的规范） ====== */
+  /* 首屏：2025 —— 源影黑体 46 粗体 */
+  .title-2025{
+    font-family:"YuanYingHei","PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:46px; font-weight:800; line-height:1.05; text-align:center;
+  }
+  /* 首屏：两行中文 —— 极影毁片辉宋 32 粗体 */
+  .title-zh-32b{
+    font-family:"JiYingHuiSong","PingFang SC","Microsoft YaHei",serif;
+    font-size:32px; font-weight:800; line-height:1.25; text-align:center;
+  }
+  /* 首屏：两行英文 —— 极影毁片辉宋 26 常规 */
+  .title-en-26{
+    font-family:"JiYingHuiSong","PingFang SC","Microsoft YaHei",serif;
+    font-size:26px; font-weight:400; line-height:1.25; text-align:center; color:var(--muted);
+  }
+  /* 腰线（首屏用） */
   .dash{height:8px; width:var(--w);
         background:repeating-linear-gradient(90deg,var(--line),var(--line) 32px,#fff0 32px,#fff0 44px);
         opacity:.6; border-radius:6px; margin:12px auto 0;}
+  /* 时间（首屏）：黑体 16，与英文距 30px；与腰线同宽对齐 */
   .time-16{width:var(--w); text-align:center; font-size:16px; font-weight:700; margin-top:30px;}
+  /* 地点（首屏）：黑体 13 */
   .place-13{width:var(--w); text-align:center; font-size:13px; font-weight:700; margin-top:12px;}
-  .org-bottom{position:fixed; left:50%; bottom:calc(10px + env(safe-area-inset-bottom));
+  /* 首屏落款固定底部 */
+  .org-bottom{
+    position:fixed; left:50%; bottom:calc(10px + env(safe-area-inset-bottom));
     transform:translateX(-50%); width:var(--w); text-align:center;
-    font-size:12px; line-height:1.55; color:#d6e5ff; z-index:2;}
+    font-size:12px; line-height:1.55; color:#d6e5ff; z-index:2;
+  }
+
+  /* 其余各屏：大标题 32 粗体；框内主标题 26 粗体；正文 16；英文 26 常规 */
   .h32{font-family:"JiYingHuiSong","PingFang SC","Microsoft YaHei",serif; font-size:32px; font-weight:800; text-align:center; margin:0 0 8px;}
   .h26b{font-family:"JiYingHuiSong","PingFang SC","Microsoft YaHei",serif; font-size:26px; font-weight:800; text-align:center; margin:0 0 8px;}
   .p16{font-size:16px; line-height:1.9; margin:0; color:var(--text);}
   .p16-muted{font-size:16px; line-height:1.9; margin:0; color:var(--muted);}
   .en26{font-family:"JiYingHuiSong","PingFang SC","Microsoft YaHei",serif; font-size:26px; font-weight:400; line-height:1.4; color:var(--muted); margin:0;}
+
+  /* 列表 */
   ol.ul{margin:0; padding-left:1.2em;}
   .li{margin:.15em 0; font-size:16px; line-height:1.9;}
+
+  /* 表格（商务合作） */
   .table{border:1px solid #5980ff; border-radius:12px; overflow:hidden; margin-top:8px;}
   .tr{display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid #2a4fb6}
   .th,.td{padding:10px 8px; text-align:center; font-size:16px}
   .th{background:#18306d88; font-weight:800}
   .tr:first-child{border-top:0}
+
+  /* 底部提示 */
   .hint{position:fixed; left:50%; bottom:14px; transform:translateX(-50%); font-size:.8rem; color:#bcd0ff; letter-spacing:.2em; opacity:.8; z-index:1;}
 </style>
 </head>
 <body>
 <div class="bg"></div>
+
 <div class="wrap">
-  <!-- 在这里填充 10 屏的内容（与我上次贴的完整版本一致） -->
+  <!-- ===== 屏 1：封面（严格按你的规范） ===== -->
   <section class="screen">
     <div class="dash"></div>
+
     <div class="title-2025">2025</div>
+
     <div class="title-zh-32b">中国低压电器</div>
     <div class="title-zh-32b">技术年会系列活动</div>
+
     <p class="title-en-26">China Low-voltage Electric Apparatus</p>
-    <p class="title-en-26">Technology Annual Conference Series Activities</p>
+    <p class="title-en-26" style="margin-top:6px;">Technology Annual Conference Series Activities</p>
+
     <div class="time-16">11.12 - 11.14　/　Nov. 12 - Nov. 14</div>
     <div class="place-13">中国 · 浙江 · 德清　/　CHINA · ZHEJIANG</div>
-    <div class="org-bottom">上海电器科学研究院<br>美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司<br>全国低压电器标准化技术委员会等7大标委会</div>
+
+    <div class="org-bottom">
+      上海电器科学研究院<br>
+      美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司<br>
+      全国低压电器标准化技术委员会等7大标委会
+    </div>
   </section>
-  <!-- 其他 9 屏请复制我之前发给你的完整内容，这里因篇幅限制未重复展开 -->
+
+  <!-- ===== 屏 2：五项系列活动 + 参会人员 ===== -->
+  <section class="screen">
+    <div class="panel">
+      <h2 class="h32">五项系列活动</h2>
+      <div class="kv">
+        <ol class="ul">
+          <li class="li">2025年中国低压电器标准化年会暨系列活动全体大会</li>
+          <li class="li">五项标准审查</li>
+          <li class="li">第七届国际熔断器技术标准应用论坛</li>
+          <li class="li">IEC低压电器产业国际前沿技术及产品标准特别论坛</li>
+          <li class="li">第四届南网网低压配电技术交流高峰论坛</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 class="h32">系列活动与参会人员</h2>
+      <p class="p16-muted">
+        活动组委会将向低压领域政府指导单位、学协会、社团联盟、关联高等院校、检测检验认证院所、产业研究院、国网南网等机构发出邀请，届时在华有外资低压电器企业决策者、中国低压领域新上市公司董事长或总裁、工程项目执行单位负责人、检测检验认证机构领导人等嘉宾将出席本次系列活动。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== 屏 3：活动（一） ===== -->
+  <section class="screen">
+    <div class="panel">
+      <h2 class="h32">活动（一） 标准化年会</h2>
+      <div class="kv">
+        <h3 class="h26b">2025年中国低压电器标准化年会<br>暨系列活动全体大会【11月13日上午】</h3>
+        <ol class="ul">
+          <li class="li">2025年度标准化年会 —— 标委会工作报告</li>
+          <li class="li">2026年标准重点工作</li>
+          <li class="li">2025年IEC标准动态 —— 总体介绍（产品标准）</li>
+        </ol>
+      </div>
+      <p class="p16" style="text-align:center; margin-top:8px;">上海电器科学研究院<br>全国低压电器标准化技术委员会等7大标委会</p>
+    </div>
+  </section>
+
+  <!-- ===== 屏 4：活动（二） ===== -->
+  <section class="screen">
+    <div class="panel">
+      <h2 class="h32">活动（二） 标准审查</h2>
+      <div class="kv">
+        <p class="p16" style="font-weight:800;margin-bottom:8px;">SAC/TC340/SC2审议：</p>
+        <ol class="ul">
+          <li class="li">低压熔断器 第3部分：非熟练人员使用的熔断器的补充要求（主要用于家用和类似用途的熔断器）—— 标准化熔断器系统示例4至F</li>
+        </ol>
+
+        <p class="p16" style="font-weight:800;margin:10px 0 8px;">SAC/TC189审议：</p>
+        <ol class="ul">
+          <li class="li">低压开关设备和控制设备 第5-1部分：控制电路电器和开关元件 机电控制电器</li>
+          <li class="li">低压封闭式开关设备和控制设备 第1部分：符合GB/T 14048.3的封闭式隔离开关的附加要求 在特定应用的维护操作中开合电气设备的部件</li>
+          <li class="li">低压电器可靠性 第8部分：自动转换开关电器可靠性试验方法</li>
+        </ol>
+
+        <p class="p16" style="font-weight:800;margin:10px 0 8px;">NEA/TC33审议：</p>
+        <ol class="ul">
+          <li class="li">低压用户用电能变换器设备接口技术要求</li>
+        </ol>
+      </div>
+      <p class="p16" style="text-align:center; margin-top:8px;">上海电器科学研究院<br>全国低压电器标准化技术委员会等7大标委会</p>
+    </div>
+  </section>
+
+  <!-- ===== 屏 5：活动（三） ===== -->
+  <section class="screen">
+    <div class="panel">
+      <h2 class="h32">活动（三） 熔断器论坛</h2>
+      <div class="kv">
+        <h3 class="h26b">第七届国际熔断器技术标准应用论坛【11月13日下午】</h3>
+        <ol class="ul">
+          <li class="li">2025年熔断器国内外标准动态</li>
+          <li class="li">关于熔断器电弧仿真</li>
+          <li class="li">跌落式熔断器技术</li>
+          <li class="li">烟火式断电器的电动汽车及储能应用</li>
+          <li class="li">低压熔断器在交直流新能源系统中的应用革新——突破2000W屏障</li>
+          <li class="li">熔断器介质恢复特性测量</li>
+          <li class="li">接插件与熔断器融合技术（2000V）</li>
+        </ol>
+      </div>
+      <p class="p16" style="text-align:center; margin-top:8px;">上海电器科学研究院<br>全国低压电器标准化技术委员会等7大标委会</p>
+    </div>
+  </section>
+
+  <!-- ===== 屏 6：活动（四） ===== -->
+  <section class="screen">
+    <div class="panel">
+      <h2 class="h32">活动（四） IEC特别论坛</h2>
+      <div class="kv">
+        <h3 class="h26b">IEC低压电器产业国际前沿技术及产品标准特别论坛【11月14日上午】</h3>
+        <ol class="ul">
+          <li class="li">当今国内外经济形势报告</li>
+          <li class="li">IEC数字化、网络化、智能化带来的基础共性标准化问题探讨</li>
+          <li class="li">IEC低压直流技术设备及应用发展趋势</li>
+          <li class="li">IEC建筑电气新型配电系统及装置发展趋势</li>
+          <li class="li">IEC固态革命部件新产品趋势动态</li>
+          <li class="li">IEC直流配电电压及电能质量</li>
+        </ol>
+      </div>
+      <p class="p16" style="text-align:center; margin-top:8px;">上海电器科学研究院<br>全国低压电器标准化技术委员会等7大标委会</p>
+    </div>
+  </section>
+
+  <!-- ===== 屏 7：活动（五） ===== -->
+  <section class="screen">
+    <div class="panel">
+      <h2 class="h32">活动（五） 国南网论坛</h2>
+      <div class="kv">
+        <h3 class="h26b">第四届国南网低压配电技术交流高峰论坛【11月14日下午】</h3>
+        <ol class="ul">
+          <li class="li">直流计量技术</li>
+          <li class="li">新一代量测开关技术</li>
+          <li class="li">低压电能质量治理措施和装备（电能治理装置、换相开关、SVG、台区储能）技术研究</li>
+          <li class="li">低压智能设备的通信协议和数据模型</li>
+          <li class="li">台区透明化</li>
+          <li class="li">……</li>
+        </ol>
+      </div>
+      <p class="p16" style="text-align:center; margin-top:8px;">上海电器科学研究院<br>全国低压电器标准化技术委员会等7大标委会</p>
+    </div>
+  </section>
+
+  <!-- ===== 屏 8：商务合作 ===== -->
+  <section class="screen">
+    <div class="panel">
+      <h2 class="h32">商务合作</h2>
+      <div class="kv">
+        <h3 class="h26b">展位信息</h3>
+        <p class="p16" style="text-align:center; margin-bottom:8px;">
+          优秀企业展示位总数：16个<br>低压电器7大标委会遴选：10个<br>对外开放（扶持中小企业）：6个
+        </p>
+
+        <div class="table">
+          <div class="tr"><div class="th">项目</div><div class="th">规格/说明</div><div class="th">价格</div></div>
+          <div class="tr"><div class="td">大型喷绘</div><div class="td">3 × 4米（唯一）</div><div class="td">1.8万元</div></div>
+          <div class="tr"><div class="td">论坛商务合作</div><div class="td">—</div><div class="td">10万元</div></div>
+          <div class="tr"><div class="td">会刊广告</div><div class="td">单页</div><div class="td">5000元</div></div>
+        </div>
+
+        <p class="p16" style="text-align:center; margin-top:12px;">
+          联系人：姜修冬<br>
+          座机：021-62574990-557　|　手机：13817640423<br>
+          邮箱：1811582717@qq.com
+        </p>
+      </div>
+      <p class="p16" style="text-align:center; margin-top:8px;">上海电器科学研究院<br>全国低压电器标准化技术委员会等7大标委会</p>
+    </div>
+  </section>
+
+  <!-- ===== 屏 9：活动相关信息 ===== -->
+  <section class="screen">
+    <div class="panel">
+      <h2 class="h32">活动相关信息</h2>
+      <div class="kv">
+        <h3 class="h26b">报到日</h3>
+        <p class="p16" style="text-align:center; margin-bottom:10px;">11月12日 13:00-21:30（酒店大堂）</p>
+
+        <h3 class="h26b">参会费</h3>
+        <p class="p16" style="text-align:center; margin-bottom:10px;">
+          标委会委员单位：2000元/人<br>非委员单位：2500元/人
+        </p>
+
+        <h3 class="h26b">住宿（自理）</h3>
+        <p class="p16" style="text-align:center;">住宿费：350元（大床/标间·含早）</p>
+      </div>
+      <p class="p16" style="text-align:center; margin-top:8px;">上海电器科学研究院<br>全国低压电器标准化技术委员会等7大标委会</p>
+    </div>
+  </section>
+
+  <!-- ===== 屏 10：鸣谢 ===== -->
+  <section class="screen">
+    <div class="panel">
+      <h2 class="h32">鸣谢</h2>
+      <div class="kv">
+        <p class="p16" style="text-align:center; margin-bottom:10px;">2025年低压电器7大标委会年会【年会联合承办单位】</p>
+        <p class="p16" style="text-align:center; margin-bottom:10px;">美高电气科技有限公司<br>浙江方圆电气设备检测有限公司</p>
+        <p class="p16" style="text-align:center; margin:10px 0;">第四届国南网低压配电技术交流高峰论坛【论坛摄像承办单位】</p>
+        <p class="p16" style="text-align:center; margin:0;">中电装备山东电子有限公司</p>
+      </div>
+      <p class="p16" style="text-align:center; margin-top:8px;">上海电器科学研究院<br>全国低压电器标准化技术委员会等7大标委会</p>
+    </div>
+  </section>
 </div>
+
 <div class="hint">↑↑ 上下滑动翻页 ↑↑</div>
+
 <script>
+  // 桌面预览用方向键翻页（手机触控自然生效）
   const wrap = document.querySelector('.wrap');
   document.addEventListener('keydown', (e)=>{
     if(e.key==='ArrowDown'){ wrap.scrollBy({top: innerHeight, behavior:'smooth'}); }
