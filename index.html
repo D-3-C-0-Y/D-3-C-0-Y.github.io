@@ -14,7 +14,6 @@
     font-family: "PingFang SC","Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     color: #eaf1ff; -webkit-font-smoothing: antialiased;
   }
-  /* 细网格与星点（科技感） */
   .bg-grid::before{
     content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.35;
     background:
@@ -41,11 +40,11 @@
 
   /* ===== 单页 ===== */
   .page { width:640px; height:972px; box-sizing:border-box;
-          padding: 28px 24px 80px; /* 预留底部落款空间 */
+          padding: 28px 24px 96px; /* 预留底部落款空间更大，避免重叠 */
           display:flex; flex-direction:column; justify-content:center; align-items:center; gap:14px;
           position:relative; }
 
-  /* 信息框（与你样本的白边框类似） */
+  /* 信息框（白边框） */
   .box {
     width: 92%;
     border: 2px solid #8fb3ff;
@@ -56,13 +55,11 @@
     text-align: left;
   }
 
-  /* ===== 排版：更“拉满”的固定字号（仍控制不溢出） ===== */
-  /* 封面更大，内容页适中 */
+  /* ===== 字号（更“拉满”） ===== */
   .cover h1 { font-size:56px; font-weight:800; line-height:1.02; margin:4px 0; text-align:center; }
   .cover h2 { font-size:38px; font-weight:800; line-height:1.18; margin:6px 0; text-align:center; }
   .cover h3 { font-size:28px; font-weight:400; line-height:1.25; margin:6px 0; text-align:center; color:#cfe0ff; }
 
-  /* 内容页统一字号（较之前上调） */
   h2 { font-size:36px; font-weight:800; line-height:1.22; margin:6px 0; text-align:center; }
   h3 { font-size:28px; font-weight:600; line-height:1.25; margin:6px 0; text-align:center; color:#cfe0ff; }
   h4 { font-size:22px; font-weight:800; margin:6px 0 4px; }
@@ -79,19 +76,20 @@
          background:repeating-linear-gradient(90deg,#8fb3ff,#8fb3ff 32px,#fff0 32px,#fff0 44px);
          opacity:.7; border-radius:6px; margin: 2px auto 8px; }
 
-  /* 每页底部落款（你要求的统一信息） */
+  /* ===== 每页落款（上移，逐行显示） ===== */
   .footer {
-    position:absolute; left:24px; right:24px; bottom:16px;
-    font-size:13px; line-height:1.55; color:#d6e5ff; text-align:center;
-    opacity:.95;
+    position:absolute; left:24px; right:24px; bottom:58px; /* 上移，避免与提示/浏览器条重叠 */
+    font-size:13px; line-height:1.55; color:#d6e5ff; text-align:center; opacity:.98;
+    display:flex; flex-direction:column; gap:2px;
   }
+  .footer span { display:block; } /* 每单位单独一行 */
 
   /* 右侧页码点 */
   .dots { position:absolute; right:10px; top:10px; display:flex; flex-direction:column; gap:6px; z-index:5; }
   .dot { width:6px; height:6px; border-radius:50%; background:#7aa8ff77; }
   .dot.active { background:#cfe0ff; box-shadow:0 0 0 3px #cfe0ff22; }
 
-  /* 翻页提示（可按需保留） */
+  /* 翻页提示 */
   .hint {
     position:absolute; left:50%; bottom:14px; transform:translateX(-50%);
     font-size:12px; letter-spacing:.28em; color:#bcd0ff; opacity:.9; user-select:none;
@@ -104,18 +102,14 @@
     50%    { transform: translateY(6px) rotate(45deg); opacity:1; }
   }
 
-  /* 防止双击放大 */
   * { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 </style>
 </head>
 <body class="bg-grid">
 <div id="stageWrap">
-  <!-- 固定舞台（640×972），整体只会缩小与居中，不会放大 -->
   <div id="stage" aria-label="H5固定画布">
-    <!-- 右侧页码指示点 -->
     <div class="dots" id="dots" aria-hidden="true"></div>
 
-    <!-- 长卷页面容器 -->
     <div class="pages" id="pages" style="transform: translateY(0);">
 
       <!-- Page 1 封面 -->
@@ -135,7 +129,11 @@
           </p>
         </div>
         <div class="footer">
-          上海电器科学研究院｜美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司｜全国低压电器标准化技术委员会等7大标委会
+          <span>上海电器科学研究院</span>
+          <span>美高电气科技有限公司</span>
+          <span>浙江方圆电气设备检测有限公司</span>
+          <span>中电装备山东电子有限公司</span>
+          <span>全国低压电器标准化技术委员会等7大标委会</span>
         </div>
       </section>
 
@@ -155,7 +153,11 @@
           届时在华外资低压电器企业决策者、中国低压领域上市公司董事长或总裁、工程项目执行单位负责人、检测检验认证机构领导人等嘉宾将出席本次系列活动。
         </p>
         <div class="footer">
-          上海电器科学研究院｜美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司｜全国低压电器标准化技术委员会等7大标委会
+          <span>上海电器科学研究院</span>
+          <span>美高电气科技有限公司</span>
+          <span>浙江方圆电气设备检测有限公司</span>
+          <span>中电装备山东电子有限公司</span>
+          <span>全国低压电器标准化技术委员会等7大标委会</span>
         </div>
       </section>
 
@@ -170,7 +172,11 @@
           <p>三、2025年IEC标准动态 —— 总体介绍（产品标准）</p>
         </div>
         <div class="footer">
-          上海电器科学研究院｜美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司｜全国低压电器标准化技术委员会等7大标委会
+          <span>上海电器科学研究院</span>
+          <span>美高电气科技有限公司</span>
+          <span>浙江方圆电气设备检测有限公司</span>
+          <span>中电装备山东电子有限公司</span>
+          <span>全国低压电器标准化技术委员会等7大标委会</span>
         </div>
       </section>
 
@@ -192,7 +198,11 @@
           <p>低压用户用电能变换器设备接口技术要求</p>
         </div>
         <div class="footer">
-          上海电器科学研究院｜美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司｜全国低压电器标准化技术委员会等7大标委会
+          <span>上海电器科学研究院</span>
+          <span>美高电气科技有限公司</span>
+          <span>浙江方圆电气设备检测有限公司</span>
+          <span>中电装备山东电子有限公司</span>
+          <span>全国低压电器标准化技术委员会等7大标委会</span>
         </div>
       </section>
 
@@ -211,7 +221,11 @@
           <p>7. 接插件与熔断器融合技术（2000V）</p>
         </div>
         <div class="footer">
-          上海电器科学研究院｜美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司｜全国低压电器标准化技术委员会等7大标委会
+          <span>上海电器科学研究院</span>
+          <span>美高电气科技有限公司</span>
+          <span>浙江方圆电气设备检测有限公司</span>
+          <span>中电装备山东电子有限公司</span>
+          <span>全国低压电器标准化技术委员会等7大标委会</span>
         </div>
       </section>
 
@@ -229,7 +243,11 @@
           <p>6. IEC直流配电电压及电能质量</p>
         </div>
         <div class="footer">
-          上海电器科学研究院｜美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司｜全国低压电器标准化技术委员会等7大标委会
+          <span>上海电器科学研究院</span>
+          <span>美高电气科技有限公司</span>
+          <span>浙江方圆电气设备检测有限公司</span>
+          <span>中电装备山东电子有限公司</span>
+          <span>全国低压电器标准化技术委员会等7大标委会</span>
         </div>
       </section>
 
@@ -247,7 +265,11 @@
           <p>6. ……</p>
         </div>
         <div class="footer">
-          上海电器科学研究院｜美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司｜全国低压电器标准化技术委员会等7大标委会
+          <span>上海电器科学研究院</span>
+          <span>美高电气科技有限公司</span>
+          <span>浙江方圆电气设备检测有限公司</span>
+          <span>中电装备山东电子有限公司</span>
+          <span>全国低压电器标准化技术委员会等7大标委会</span>
         </div>
       </section>
 
@@ -285,7 +307,11 @@
           </p>
         </div>
         <div class="footer">
-          上海电器科学研究院｜美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司｜全国低压电器标准化技术委员会等7大标委会
+          <span>上海电器科学研究院</span>
+          <span>美高电气科技有限公司</span>
+          <span>浙江方圆电气设备检测有限公司</span>
+          <span>中电装备山东电子有限公司</span>
+          <span>全国低压电器标准化技术委员会等7大标委会</span>
         </div>
       </section>
 
@@ -303,7 +329,11 @@
           <p>住宿费：350元（大床/标间·含早）</p>
         </div>
         <div class="footer">
-          上海电器科学研究院｜美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司｜全国低压电器标准化技术委员会等7大标委会
+          <span>上海电器科学研究院</span>
+          <span>美高电气科技有限公司</span>
+          <span>浙江方圆电气设备检测有限公司</span>
+          <span>中电装备山东电子有限公司</span>
+          <span>全国低压电器标准化技术委员会等7大标委会</span>
         </div>
       </section>
 
@@ -318,7 +348,11 @@
           <p class="center">中电装备山东电子有限公司</p>
         </div>
         <div class="footer">
-          上海电器科学研究院｜美高电气科技有限公司｜浙江方圆电气设备检测有限公司｜中电装备山东电子有限公司｜全国低压电器标准化技术委员会等7大标委会
+          <span>上海电器科学研究院</span>
+          <span>美高电气科技有限公司</span>
+          <span>浙江方圆电气设备检测有限公司</span>
+          <span>中电装备山东电子有限公司</span>
+          <span>全国低压电器标准化技术委员会等7大标委会</span>
         </div>
       </section>
     </div>
@@ -329,7 +363,7 @@
 </div>
 
 <script>
-  /* ========= 1) 固定画布缩放（只缩小不放大）并水平垂直居中 ========= */
+  /* 固定画布缩放（只缩小不放大）并水平垂直居中 */
   function fitStage() {
     const stage = document.getElementById('stage');
     const w = 640, h = 972;
@@ -344,7 +378,7 @@
   window.addEventListener('orientationchange', fitStage);
   fitStage();
 
-  /* ========= 2) 上下翻页（手势/滚轮/键盘） ========= */
+  /* 上下翻页（手势/滚轮/键盘） */
   const pagesEl = document.getElementById('pages');
   const PAGE_H = 972;
   const TOTAL = 10;
@@ -353,10 +387,7 @@
   function goto(i){
     index = Math.max(0, Math.min(TOTAL-1, i));
     pagesEl.style.transform = `translateY(${-index * PAGE_H}px)`;
-    // 更新小圆点
-    document.querySelectorAll('.dot').forEach((d, k)=> {
-      d.classList.toggle('active', k === index);
-    });
+    document.querySelectorAll('.dot').forEach((d, k)=> d.classList.toggle('active', k === index));
   }
 
   // 右侧页码点
@@ -374,19 +405,17 @@
     setTimeout(()=> locking=false, lockMs);
   }
 
-  // 触摸手势
+  // 触摸
   let startY = 0, deltaY = 0, touching=false;
   stage.addEventListener('touchstart', (e)=>{ touching=true; startY = e.touches[0].clientY; }, {passive:true});
   stage.addEventListener('touchmove', (e)=>{ if(!touching) return; deltaY = e.touches[0].clientY - startY; }, {passive:true});
   stage.addEventListener('touchend', ()=> {
     if(!touching) return; touching=false;
-    if (Math.abs(deltaY) > 50) {
-      throttleFlip(()=> goto(index + (deltaY<0 ? 1 : -1)));
-    }
+    if (Math.abs(deltaY) > 50) throttleFlip(()=> goto(index + (deltaY<0 ? 1 : -1)));
     deltaY = 0;
   });
 
-  // 鼠标滚轮
+  // 滚轮
   window.addEventListener('wheel', (e)=>{
     if (Math.abs(e.deltaY) < 10) return;
     throttleFlip(()=> goto(index + (e.deltaY>0 ? 1 : -1)));
